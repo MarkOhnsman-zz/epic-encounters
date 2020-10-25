@@ -19,8 +19,9 @@
       <div class="results">
         <p
           class="result"
-          v-for="monster in filteredResults"
+          v-for="monster in state.filteredResults"
           :key="monster.index"
+          @click="addMonster(monster.index)"
         >
           {{ monster.name }}
         </p>
@@ -38,16 +39,18 @@ export default {
   setup() {
     const state = reactive({
       filter: '',
-      monsters: computed(() => AppState.monsters)
+      filteredResults: computed(() => {
+        return AppState.monsters.filter(m => m.name.toLowerCase().includes(state.filter.toLowerCase()))
+      })
     })
     onMounted(() => {
       dndApiService.getAllMonsters()
     })
     return {
       state,
-      filteredResults: computed(() => {
-        return state.monsters.filter(m => m.name.toLowerCase().includes(state.filter.toLowerCase()))
-      })
+      async addMonster(index) {
+        await dndApiService.getMonster(index)
+      }
     }
   }
 }

@@ -62,5 +62,12 @@ a {
   flex-direction: column;
   min-height: 100vh;
 }
+.action {
+  cursor: pointer;
+  transition: ease .5s;
+    &:hover {
+    transform: scale(1.01);
+  }
+}
 
 </style>

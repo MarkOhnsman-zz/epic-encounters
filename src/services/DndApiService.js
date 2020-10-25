@@ -15,7 +15,7 @@ class DndApiService {
   async getMonster(name) {
     try {
       const res = await dndApi.get(name)
-      AppState.activeMonster = new Monster(res.data)
+      AppState.encounterMonsters.push(new Monster(res.data))
     } catch (error) {
       console.error(error)
     }
