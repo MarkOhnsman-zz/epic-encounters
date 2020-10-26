@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Encounter</h1>
     <monster v-for="m in state.monsters" :key="m.id" :monsterData="m" />
   </div>
 </template>
