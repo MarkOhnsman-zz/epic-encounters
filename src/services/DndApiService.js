@@ -1,4 +1,4 @@
-import Monster from '../../models/Monster'
+import { Monster } from '../../models/Monster'
 import { AppState } from '../AppState'
 import { dndApi } from './AxiosService'
 

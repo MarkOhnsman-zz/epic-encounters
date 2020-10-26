@@ -15,15 +15,21 @@ class Action {
     this.bonus = data.attack_bonus
   }
 }
-class StandardAction extends Action {
+export class StandardAction extends Action {
   constructor(data) {
     super(data)
-    this.damage = []
+    /** @type {Damage[]} */
     this.damage = data.damage.map(d => new Damage(d))
   }
 }
+export class SaveAction extends Action {
+  constructor(data) {
+    super(data)
+    this.dcType = data.dc.dc_type.name
+  }
+}
 
-export default class Monster {
+export class Monster {
   constructor(data) {
     this.id = generateId()
     this.index = data.index
@@ -87,9 +93,10 @@ export default class Monster {
     actions.forEach(act => {
       if (act.damage) {
         allActions.push(new StandardAction(act))
-      }
-      if (act.options) {
+      } else if (act.options) {
         allActions.push(new Action(act))
+      } else if (act.dc) {
+        allActions.push(new SaveAction(act))
       }
     })
     return allActions

@@ -1,5 +1,5 @@
 <template>
-  <div class="card p-2">
+  <div class="card p-2 my-3">
     <div class="title d-flex justify-content-between">
       <h3 class="card-title text-primary">{{ monster.name }}</h3>
       <i
@@ -82,7 +82,28 @@
     </div>
     <h4 class="text-primary border-primary border-bottom pt-3">Actions</h4>
     <div class="card-body p-2">
-      <div class="action" v-for="action in monster.actions" :key="action.id">
+      <div
+        class=""
+        v-for="ability in monster.specialAbilities"
+        :key="ability.name"
+      >
+        <strong>{{ ability.name }}</strong
+        >: {{ ability.desc }}
+      </div>
+      <div
+        class="special-action"
+        v-for="action in state.specialActions"
+        :key="action.id"
+      >
+        <strong>{{ action.name }}</strong
+        >: {{ action.desc }}
+      </div>
+      <div
+        class="action"
+        v-for="action in state.standardActions"
+        :key="action.id"
+        @click="triggerAction(action)"
+      >
         <strong>{{ action.name }}</strong
         >: {{ action.desc }}
       </div>
@@ -91,16 +112,20 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { monsterService } from '../services/MonsterService'
+import { StandardAction } from '../../models/Monster'
 
 export default {
   name: 'Monster',
   props: ['monsterData'],
   setup(props) {
     const state = reactive({
+      standardActions: computed(() => props.monsterData.actions.filter(a => a instanceof StandardAction)),
+      specialActions: computed(() => props.monsterData.actions.filter(a => !(a instanceof StandardAction)))
     })
     return {
+      state,
       monster: props.monsterData,
       modifier(stat) {
         const value = Math.floor((stat - 10) / 2)
@@ -108,6 +133,12 @@ export default {
       },
       removeMonster() {
         monsterService.removeMonster(props.monsterData.id)
+      },
+      isStandard(action) {
+        return action instanceof StandardAction
+      },
+      triggerAction(action) {
+        monsterService.triggerAction(props.monsterData, action)
       }
     }
   }
