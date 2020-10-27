@@ -1,7 +1,7 @@
 <template>
-  <div class="library p-3">
-    <div class="card p-2 h-100">
-      <div class="clean-input-group input-group mb-3">
+  <div>
+    <div class="card rounded">
+      <div class="clean-input-group input-group">
         <input
           type="text"
           class="form-control"
@@ -15,16 +15,18 @@
             ><i class="fas fa-search"></i
           ></span>
         </div>
-      </div>
-      <div class="results">
-        <p
-          class="result"
-          v-for="monster in state.filteredResults"
-          :key="monster.index"
-          @click="addMonster(monster.index)"
-        >
-          {{ monster.name }}
-        </p>
+        <div class="results position-absolute bg-white shadow">
+          <div class="position-relative" style="z-index: 999">
+            <div
+              class="result p-2"
+              v-for="monster in state.filteredResults"
+              :key="monster.index"
+              @click="addMonster(monster.index)"
+            >
+              {{ monster.name }}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -49,6 +51,7 @@ export default {
     return {
       state,
       async addMonster(index) {
+        debugger
         await dndApiService.getMonster(index)
       }
     }
@@ -57,17 +60,15 @@ export default {
 </script>
 
 <style lang="scss">
-.library {
-  height: 90vh;
-}
 .clean-input-group {
  border-radius: 0;
  .form-control {
    border:none;
    border-radius: 0;
    border-bottom: 1px solid grey;
-   &:focus {
-     box-shadow: none;
+   &:focus, &:active {
+      box-shadow: none;
+      transition-delay: .3s;
       border-color: var(--info);
      ~.input-group-append span{
        border-color: var(--info);
@@ -75,6 +76,11 @@ export default {
      }
    }
  }
+  &:hover .results{
+    max-height: 75vh;
+    pointer-events: all;
+    z-index: 2;
+  }
  .input-group-text {
    border:inherit;
    border-radius: inherit;
@@ -84,10 +90,15 @@ export default {
 }
 .results{
   overflow-y: auto;
+  max-height: 0;
+  transition: height .15s linear;
+  top: 2.5em;
+  width: 100%;
 }
 .result {
   margin: 0;
   padding: .2em;
+  position: relative;
  &:hover {
    background-color: var(--light);
    cursor: pointer;

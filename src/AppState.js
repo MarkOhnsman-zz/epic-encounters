@@ -1,12 +1,13 @@
 import { reactive } from 'vue'
-import Monster from '../models/Monster'
+import { Monster } from '../models/Monster'
 
 export const AppState = reactive({
   monsters: [],
   /** @type {Monster[]} */
   encounterMonsters: [],
   /** @type {Monster} */
-  activeMonster: null
+  activeMonster: null,
+  events: []
 })
 
 // NOTE Getters are used for repeated computeds

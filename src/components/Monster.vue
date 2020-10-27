@@ -1,7 +1,9 @@
 <template>
-  <div class="card p-2 my-3">
+  <div class="card p-2 my-3 shadow rounded">
     <div class="title d-flex justify-content-between">
-      <h3 class="card-title text-primary">{{ monster.name }}</h3>
+      <h3 class="card-title text-primary">
+        <b>{{ monster.name }}</b>
+      </h3>
       <i
         class="fa fa-times text-danger action"
         aria-hidden="true"
@@ -145,11 +147,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 p {
   margin: 0;
 }
 strong {
   color: var(--primary);
+}
+.action {
+  user-select: none;
+   &:hover {
+     background-color: var(--light);
+     cursor: pointer;
+   }
 }
 </style>

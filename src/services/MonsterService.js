@@ -39,9 +39,9 @@ class MonsterService {
       total += damage + bonus
       damageString.push(`${damage} ${d.type}${bonus ? ' + ' + bonus : ''}`)
     })
-    const event = `The ${monster.name} attacks using its ${action.name}. ${toHit} to hit, and dealing ${total} points of damage (${damageString.join(', ')})`
+    const story = `The ${monster.name} attacks using its ${action.name}. ${toHit} to hit, and dealing ${total} points of damage (${damageString.join(', ')})`
 
-    console.log(event)
+    AppState.events.push(story)
   }
 }
 
