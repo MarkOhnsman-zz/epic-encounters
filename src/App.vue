@@ -52,7 +52,7 @@
       Ohnsman
     </a>
 
-    <div class="d-none">{{ stateStatus }}</div>
+    <div class="d-none">{{ AppState }}</div>
   </footer>
 </template>
 
@@ -74,10 +74,8 @@ export default {
     return {
       state,
       undoable: computed(() => historyGetters.undoable),
-      redoable: computed(() => {
-        return historyService.currentIndex < historyService.appHistory.length - 1
-      }),
-      stateStatus: computed(() => {
+      redoable: computed(() => historyService.currentIndex < historyService.appHistory.length - 1),
+      AppState: computed(() => {
         historyService.addState()
         return AppState
       }),

@@ -51,7 +51,6 @@ export default {
     return {
       state,
       async addMonster(index) {
-        debugger
         await dndApiService.getMonster(index)
       }
     }
