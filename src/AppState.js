@@ -5,9 +5,7 @@ export const AppState = reactive({
   monsters: [],
   /** @type {Monster[]} */
   encounterMonsters: [],
-  /** @type {Monster} */
-  activeMonster: null,
-  events: []
+  actions: []
 })
 
 // NOTE Getters are used for repeated computeds

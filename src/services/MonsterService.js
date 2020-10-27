@@ -41,7 +41,7 @@ class MonsterService {
     })
     const story = `The ${monster.name} attacks using its ${action.name}. ${toHit} to hit, and dealing ${total} points of damage (${damageString.join(', ')})`
 
-    AppState.events.push(story)
+    AppState.actions.push(story)
   }
 }
 
